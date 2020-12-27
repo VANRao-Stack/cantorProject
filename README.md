@@ -242,7 +242,7 @@ def actual_sol(x):
 
 ![Graph](Graph.JPG)
 
-This doesn't lood too bad now does it!!!
+This doesn't look too bad now does it!!!
 
 ## Conclusion
 Although this library only consists of very few tools, as mentioned in the introduction, this approach to numerically solving differential equations has numerous advantages. 
