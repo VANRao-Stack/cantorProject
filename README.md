@@ -1,32 +1,27 @@
 # The CantorProject
 
-Arguably, the most important invention of the twentieth century, albeit I must say with heavy competition from a lot of directions, was that of the
-computer. And perhaps it's such importance stemmed from the fact that, it paved way to use brute force or sometimes clever computation to numerical solve
-problems that were initially considered unsolvable. From evaluating the Navier-Stokes Equation, to analysing Big Data, the importance of computers only grew 
-as time progressed. In this project, we bring to the fore a few tools that could help numerically solve differential equations. The project currently only 
-supports simulating Ordinary differntial equations and Partial differential equations, from now on refered to as ODEs and PDEs. 
-
-Partial differential equations (PDEs) are extensively used in the mathematical modelling of various problems in physics,
-engineering and finance. In practical situations, these equations typically lack analytical solutions and are solved
-numerically. In current practice, most numerical approaches to solve PDEs like finite element method (FEM), finite
-difference method (FDM) and finite volume method (FVM) are mesh based. A typical implementation of a mesh based
-approach involves three steps: 
-(1) Grid generation, 
-(2) Discretization of governing equation and 
-(3) Solution of the discretized equations with some iterative method.
+Partial differential equations (PDEs) and Ordinary Differential Equations (ODEs) are extensively used in 
+the mathematical modelling of various problems in physics, engineering, finance and healthcare. In practical situations, 
+these equations typically lack analytical solutions or are simply too difficult to solve and are hence solved 
+numerically. In current practice, most numerical approaches to solve PDEs like finite element method (FEM), 
+finite difference method (FDM) and finite volume method (FVM) are mesh based. A typical implementation of a 
+mesh based approach involves three steps: 
+1. Grid generation, 
+2. Discretization of governing equation and 
+3. Solution of the discretized equations with some iterative method.
 
 However, there are limitations to these approaches. Some of the limitations of these methods are as follows:
 1. They cannot be used to solve PDEs in complex computational domains because grid generation (step 1) itself becomes infeasible.
-2. The process of discretization (step 2) creates a discrepancy between the mathematical nature of actual PDE
+2. The process of discretization (step 2) creates a discrepancy between the mathematical nature of actual ODE/PDE
 and its approximate difference equation. Sometimes this can lead to quite serious problems.
 
 One of the options to fix these issues is to use neural networks. In this approach, the data set consists of some randomly
-selected points in the domain and on the boundary. The governing equations and the boundary conditions are fitted
+selected points in the domain and on the boundary, called the collocation points. The governing equations and the boundary conditions are fitted
 using neural network. There are two main motivations for this approach. First, being universal approximators, neural
-networks can potentially represent any PDE. So this avoids the discretization step and thus discretization based physics
+networks can potentially represent any ODE/PDE. So this avoids the discretization step and thus discretization based physics
 errors too. Second, it is meshfree and therefore complex geometries can be easily handled. Initial work in this
 direction can be credited to Lagaris et al. Firstly, they solved the initial boundary value problem using neural
-networks and later they extended their work to handle irregular boundaries. Since then, a lot of work has been done in
+networks and later extended their work to handle irregular boundaries. Since then, a lot of work has been done in
 this field. In particular, we refer to the physics-informed neural networks (PINN) approach by
 Raissi and Karniadakis and Raissi et. al. This approach has produced promising results for a series of
 benchmark nonlinear problems.
@@ -48,15 +43,15 @@ Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Part
 * [Citations](#citations)
 
 ## Library
-As mentioned earlier, the cantorProject aims to bring a set of tools that can be used by researchers and students alike to solve differential equations, 
+The cantorProject aims to bring a set of tools that can be used by researchers and students alike to solve differential equations 
 using neural networks. The library currently uses Tensorflow 2.4, along with Scipy-Optimize and Tensorflow Proability for its functioning. The library provides, 
 a simple class for constructing a neural network and then two other classes for optimizing the same, the choice of which is left to the user. In the tutorial 
 that follows, we will demostrate how to utilize the tools provided by the library to solve an extremely simple ODE of the form, y'' + y' + y = 0, with the Cauchy 
 condiotions being, y(0) = 1, and y'(0) = 5. The method illustrated, could be thus extended to solve much more complex equations, the solution to the harmonic 
-oscillator being one of them. We have demostrated its solution in a Jupyter notebook, attached within the GitHub repo. 
+oscillator being one of them, for which we have we have demostrated the solution in a Jupyter notebook, attached within the GitHub repo. 
 
 ## Usage
-We will now leverage the tools offered by the library to solve an extremely simple ODE, for more examples related to the same, check out the jupyter notebooks, withing th repo. 
+We will now leverage the tools offered by the library to solve an extremely simple ODE, for more examples related to the same, check out the jupyter notebooks, within the repo. 
 
 ### Building the Gradient Layer
 
@@ -111,15 +106,15 @@ To modify the Gradient Layer class to accomodate for say PDEs we need only modif
 For examples of the same, please refer to the attached notebooks. 
 
 ### Preparing the Neural Net
-We now build the Neural Network, that we utilize to approximate the the function that simulates the neural network. 
+We now build the Neural Network, that we utilize to approximate the function that simulates the differential equation. 
 
 ```sh
 import cantorProject as cp
 network = cp.Network.build()
 network.summary()
 ```
-This code snippet construct an extremely simple neural network with 8 layers and 20 neurons in each. We also, hyperbolic tangent activation in each of those layers. 
-To modify the regular behaviour, we can pass in arguments. To modify the network: 
+This code snippet construct an extremely simple neural network with 8 layers and 20 neurons in each. It uses the hyperbolic tangent activation in each of those layers,
+by deafult. To modify the regular behaviour, we can pass in arguments as follows: 
 
 ```sh
 neural_net = [30, 30, 30]
@@ -182,15 +177,15 @@ class PINN:
 If you look closely at the code, you will realize that the PINN model, takes two inputs, one being the collocation points and the second being the boundary conditions. 
 We calculate the derivatives and find the u_eqn which becomes our optimization problem. We follow it up with finding the intitial condition outputs which becomes part
 of our output. From the problem we are trying to solve, we see that, tx_eqn could be any number (basically x) and forms the collocation points of our function, tx_ini is 
-basically all just x=0, representing our boundary conditions. The outputs, u_eqn is always zero, since that's our optimization problem, u_ini is 1, as mentioned in the 
+basically all just x=0, representing our Cauchy conditions. The outputs, u_eqn is always zero, since that's our optimization problem, u_ini is 1, as mentioned in the 
 problem posed, whereas du_dx_ini is 5. 
 
 ```sh
-pinn = PINN(network, c=1).build()
+pinn = PINN(network).build()
 ```
 
 ### Dataset Preparation
-This is as described in the end of the previous section. We simply accumlate the values of all points we are trying to simulate, and combine them to form
+This is as described at the end of the previous section. We simply accumlate the values of all points we are trying to simulate, and combine them to form
 the dataset. 
 
 ```sh
@@ -202,17 +197,17 @@ tx_ini[..., 0] = 0*tx_ini[..., 0]                  # x = 0
 x_train = [tx_eqn, tx_ini]
 ```
 ```sh
-u_zero = np.zeros((num_train_samples, 1))
-u_ini = np.ones((num_train_samples, 1))
-du_dt_ini = 5 * np.ones((num_train_samples, 1))
+u_zero = np.zeros((num_train_samples, 1))          # y = 0
+u_ini = np.ones((num_train_samples, 1))            # y(0) = 1
+du_dt_ini = 5 * np.ones((num_train_samples, 1))    # y'(0) = 5
 y_train = [u_zero, u_ini, du_dt_ini]
 ```
 NOTE: To replicate the results achieved by the author in the simulation use, num_train_samples=10000 and num_test_samples=1000. 
 
 ### Training using First Order Optimizers
-First order optimizers such as RMSProp and Adam are hugely used in ML specifically in the field of deep learning to train huge neural nets. However, one
-main drawback otheirs is that they utilize only the first order derivative of the function to optimize the weights and biases. This leads to poor accuracy scores, hence, 
-the use of first order derivatives is heavily discouraged. However, owing to great speed of convergence, we utilize first order optimizers to initially train the network before following it up with second order derivative based Optimizers. 
+First order optimizers such as RMSProp and Adam are widely used in ML, specifically in the field of deep learning to train large neural nets. However, one
+main drawback of theirs is that they utilize only the first order derivative of the function to optimize the weights and biases. This leads to poor accuracy scores, hence, 
+the use of first order derivatives is heavily discouraged. However, owing to great speed of convergence, we utilize first order optimizers to initially train the network before following it up with second order derivative based optimizers. 
 
 ### Training using Quasi-Newtonian Methods
 The library currently supports only the L-BFGS methods, both as packaged using Scipy-Optimize and Tensorflow-Proabability. The following code is used to create the trainer
@@ -230,7 +225,37 @@ tfp_trainer = cp.tfp_Trainer(pinn, x_train, y_train)
 result = tfp_trainer.train()
 cp.set_weights(tfp_trainer, pinn, result.position)
 ```
-With this we have our neural net ready for predictions. 
+With this we have our neural net ready for predictions.
+
+As with creating the neural net, the trainer also offers many modifications that can help us in custimizing the same. Let's see a code sample: 
+
+```sh
+# sci_Trainer arguments
+sci_trainer = cp.sci_Trainer(model, x_train, y_train, first_order_trainer='rmsprop', batch_size=128, first_order_epochs=10,
+                 factr=10, m=50, maxls=50, maxiter=15000)
+                 
+model: The model to be trained, PINN in our case
+x_train, y_train: The dataset to be used for optimization
+first_order_trainer: The first order optimizer to be used, set first_order_epochs to zero, to avoid using the same
+batch_size: batch size of the first order optimizer
+first_order_epochs: Number of epochs for the first order optimizer 
+factr: The iteration stops when (f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} <= factr * eps, where eps is the machine precision, which is automatically generated by the code. Typical values for factr are: 1e12 for low accuracy; 1e7 for moderate accuracy; 10.0 for extremely high accuracy.
+m: The maximum number of variable metric corrections used to define the limited memory matrix
+maxls: Maximum number of line search steps (per iteration)
+maxiter: Maximum number of iterations, for L-BFGS
+```
+```sh
+# tfp_Trainer arguments
+tfp_trainer = cp.tfp_Trainer(pinn, x_train, y_train, model, first_order_trainer='rmsprop', batch_size=128, 
+                 first_order_epochs=10, bfgs_iter=100)
+                 
+model: The model to be trained, PINN in our case
+x_train, y_train: The dataset to be used for optimization
+first_order_trainer: The first order optimizer to be used, set first_order_epochs to zero, to avoid using the same
+batch_size: batch size of the first order optimizer
+first_order_epochs: Number of epochs for the first order optimizer
+maxiter: Maximum number of iterations, for L-BFGS
+```
 
 ### Inference
 Let's now verify our results by plotting a graph of our predictions and that of the actual results to get a side by side comparison of the two. 
@@ -247,7 +272,7 @@ This doesn't look too bad now does it!!!
 ## Conclusion
 Although this library only consists of very few tools, as mentioned in the introduction, this approach to numerically solving differential equations has numerous advantages. 
 With that being said, the current state of the art research methods in discrete numerical analysis is far superior to that of the neural net based approaches, part of the 
-reason being because ML has always been about plain Vanilla applications that offer no meaningful contribution to the field of computation. Hopefully, with the advent of 
+reason being because ML has always been about vanilla applications that offer no meaningful contribution to the field of computation. Hopefully, with the advent of 
 such creative endeavours we would finally witness the true nature of ML, not as a simple money making tool for huge organizations but rather a reliable source of many wonders. 
 
 ## Citations 
