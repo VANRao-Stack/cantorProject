@@ -29,6 +29,10 @@ benchmark nonlinear problems.
 In this project we have used the approach introduced by Maziar Raissi, Paris Perdikaris and George Em Karniadakis in their paper, 
 Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Partial Differential Equations (see citations at the bottom). 
 
+### Contributions
+The approach mentioned here is heavily based on the code I found [here](https://github.com/okada39/pinn_wave). I mostly added GPU
+utilization as well as first order optimizers for faster convergence. 
+
 ## Table of Content
 
 * [Library](#library)
