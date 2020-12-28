@@ -31,7 +31,7 @@ Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Part
 
 ### Contributions
 The approach mentioned here is heavily based on the code I found [here](https://github.com/okada39/pinn_wave). I mostly added GPU
-utilization as well as first order optimizers for faster convergence. 
+utilization as well as first order optimizers for faster convergence. I also came up with a cool name for the package:)
 
 ## Table of Content
 
