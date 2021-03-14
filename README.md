@@ -31,7 +31,7 @@ Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Part
 
 ### Blog Post
 
-I also recently wrote an entire blog post covering the usage of Neural Nets here: [Neural Networks and Differential Equations](https://vanrao.medium.com/neural-networks-and-differential-equations-aa13887f4801)
+I also recently wrote an entire blog post covering the usage of Neural Nets to solve differential equations here: [Neural Networks and Differential Equations](https://vanrao.medium.com/neural-networks-and-differential-equations-aa13887f4801)
 
 ## Table of Content
 
