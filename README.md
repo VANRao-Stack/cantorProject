@@ -33,7 +33,7 @@ Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Part
 The approach mentioned here is heavily based on the code I found [here](https://github.com/okada39/pinn_wave). I mostly added GPU
 utilization as well as first order optimizers for faster convergence. I also came up with a cool name for the package:)
 
-You could also read more about solving differential equations using Neural Nets at my blog post here: [Neural Netowrks and Differntial Equations](https://vanrao.medium.com/neural-networks-and-differential-equations-aa13887f4801)
+You could also read more about solving differential equations using Neural Nets at my blog post here: [Neural Networks and Differential Equations](https://vanrao.medium.com/neural-networks-and-differential-equations-aa13887f4801)
 
 ## Table of Content
 
