@@ -29,11 +29,9 @@ benchmark nonlinear problems.
 In this project we have used the approach introduced by Maziar Raissi, Paris Perdikaris and George Em Karniadakis in their paper, 
 Physics Informed Deep Learning (Part I): Data-driven Solutions of Nonlinear Partial Differential Equations (see citations at the bottom). 
 
-### Contributions
-The approach mentioned here is heavily based on the code I found [here](https://github.com/okada39/pinn_wave). I mostly added GPU
-utilization as well as first order optimizers for faster convergence. I also came up with a cool name for the package:)
+### Blog Post
 
-You could also read more about solving differential equations using Neural Nets at my blog post here: [Neural Networks and Differential Equations](https://vanrao.medium.com/neural-networks-and-differential-equations-aa13887f4801)
+I also recently wrote an entire blog post covering the usage of Neural Nets here: [Neural Networks and Differential Equations](https://vanrao.medium.com/neural-networks-and-differential-equations-aa13887f4801)
 
 ## Table of Content
 
